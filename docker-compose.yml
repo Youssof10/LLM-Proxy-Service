@@ -10,8 +10,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'        # Proxy is lightweight, only needs half a core
-          memory: 512M       # 512 Megabytes of RAM max
+          cpus: '1.0'        
+          memory: 1G       
 
   # The First Model Container (Isolated)
   model-phi3-container:
@@ -22,8 +22,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '4.0'        # Limits Phi-3 to 4 CPU cores
-          memory: 6G         # Limits Phi-3 to 6 Gigabytes of RAM
+          cpus: '6.0'        
+          memory: 8G         
         # ---------------------------------------------------------
         # OPTIONAL: Uncomment the reservations block below to enable 
         # NVIDIA GPU acceleration. (Host must have NVIDIA drivers).
@@ -43,8 +43,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2.0'        # Limits TinyLlama to 2 CPU cores
-          memory: 3G         # Limits TinyLlama to 3 Gigabytes of RAM
+          cpus: '4.0'        
+          memory: 4G         
         # ---------------------------------------------------------
         # OPTIONAL: Uncomment the reservations block below to enable 
         # NVIDIA GPU acceleration. (Host must have NVIDIA drivers).
