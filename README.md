@@ -16,7 +16,7 @@ This project utilizes a microservices architecture to ensure isolation and scala
 
 **Step 1: Clone the repository**
 ```bash
-git clone [https://github.com/Youssof10/LLM-Proxy-Service.git](https://github.com/Youssof10/LLM-Proxy-Service.git)
+git clone https://github.com/Youssof10/LLM-Proxy-Service.git
 cd LLM-Proxy-Service
 ```
 
