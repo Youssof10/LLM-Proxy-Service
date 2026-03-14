@@ -1,0 +1,30 @@
+services:
+  # The Gateway Container
+  proxy:
+    build: ./proxy
+    ports:
+      - "8000:80"
+    depends_on:
+      - model-phi3-container
+      - model-tinyllama-container
+
+  # The First Model Container (Isolated)
+  model-phi3-container:
+    build: ./model_phi3
+    container_name: model-phi3-container
+    # Volumes save the downloaded weights permanently
+    volumes:
+      - phi3_data:/root/.ollama
+
+  # The Second Model Container (Isolated)
+  model-tinyllama-container:
+    build: ./model_tinyllama
+    container_name: model-tinyllama-container
+    # Volumes save the downloaded weights permanently
+    volumes:
+      - tinyllama_data:/root/.ollama
+
+# Declare the persistent storage volumes
+volumes:
+  phi3_data:
+  tinyllama_data:
