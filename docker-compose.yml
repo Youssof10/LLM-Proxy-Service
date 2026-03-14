@@ -7,22 +7,53 @@ services:
     depends_on:
       - model-phi3-container
       - model-tinyllama-container
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'        # Proxy is lightweight, only needs half a core
+          memory: 512M       # 512 Megabytes of RAM max
 
   # The First Model Container (Isolated)
   model-phi3-container:
     build: ./model_phi3
     container_name: model-phi3-container
-    # Volumes save the downloaded weights permanently
     volumes:
       - phi3_data:/root/.ollama
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'        # Limits Phi-3 to 4 CPU cores
+          memory: 6G         # Limits Phi-3 to 6 Gigabytes of RAM
+        # ---------------------------------------------------------
+        # OPTIONAL: Uncomment the reservations block below to enable 
+        # NVIDIA GPU acceleration. (Host must have NVIDIA drivers).
+        # ---------------------------------------------------------
+        # reservations:
+        #   devices:
+        #     - driver: nvidia
+        #       count: all
+        #       capabilities: [gpu]
 
   # The Second Model Container (Isolated)
   model-tinyllama-container:
     build: ./model_tinyllama
     container_name: model-tinyllama-container
-    # Volumes save the downloaded weights permanently
     volumes:
       - tinyllama_data:/root/.ollama
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'        # Limits TinyLlama to 2 CPU cores
+          memory: 3G         # Limits TinyLlama to 3 Gigabytes of RAM
+        # ---------------------------------------------------------
+        # OPTIONAL: Uncomment the reservations block below to enable 
+        # NVIDIA GPU acceleration. (Host must have NVIDIA drivers).
+        # ---------------------------------------------------------
+        # reservations:
+        #   devices:
+        #     - driver: nvidia
+        #       count: all
+        #       capabilities: [gpu]
 
 # Declare the persistent storage volumes
 volumes:
